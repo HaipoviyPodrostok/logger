@@ -31,4 +31,6 @@ typedef enum {
     LOGGER_ERR_INCORRECT_STATUS = 15,
 } logger_err_t;
 
+const char* tree_error_str(logger_err_t error);
+
 #endif //ERROR_HANDLING_H
