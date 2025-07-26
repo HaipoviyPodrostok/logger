@@ -1,7 +1,7 @@
 #ifndef SRC_LOGGER_H
 #define SRC_LOGGER_H
 
-#include "../utils/error_handling.h"
+#include "error_handling.h"
 
 #define DEFAULT_STR_SIZE 50 
 
