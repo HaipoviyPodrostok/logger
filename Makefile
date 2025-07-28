@@ -45,6 +45,7 @@ else
 	LDFLAGS = 
 endif
 
+
 OUT_O_DIR ?= build
 SRC = ./src
 
@@ -58,6 +59,7 @@ CSRC = src/logger.cpp utils/error_handling.cpp
 
 COBJ := $(addprefix $(OUT_O_DIR)/, $(CSRC:.cpp=.o))
 DEPS = $(COBJ:.o=.d)
+
 
 .PHONY: all
 all: $(OUT_O_DIR)/liblogger.a
