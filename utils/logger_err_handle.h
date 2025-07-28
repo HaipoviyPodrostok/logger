@@ -1,5 +1,5 @@
-#ifndef ERROR_HANDLING_H
-#define ERROR_HANDLING_H
+#ifndef LOGGER_ERR_HANDLE_H
+#define LOGGER_ERR_HANDLE_H
 
 #include <stdio.h>
 
@@ -33,4 +33,4 @@ typedef enum {
 
 const char* tree_error_str(logger_err_t error);
 
-#endif //ERROR_HANDLING_H
+#endif //LOGGER_ERR_HANDLE_H
