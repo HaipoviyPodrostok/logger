@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#define ERROR_HANDLE(call_func, ...) ({                                             \
+#define LOGGER_ERROR_HANDLE(call_func, ...) ({                                             \
     logger_err_t error = call_func;                                                 \
     if (error) {                                                                    \
         fprintf(stderr, "[" #call_func "] Error: %s\n", tree_error_str(error));     \
