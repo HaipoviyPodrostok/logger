@@ -55,7 +55,7 @@ override CFLAGS += $(COMMONINC)
 
 ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-CSRC = src/logger.cpp utils/error_handling.cpp
+CSRC = src/logger.cpp utils/logger_err_handle.cpp
 
 COBJ := $(addprefix $(OUT_O_DIR)/, $(CSRC:.cpp=.o))
 DEPS = $(COBJ:.o=.d)
