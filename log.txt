@@ -1,2 +1,0 @@
-[27-07-2025 00:53:13] [DEBUG] main.cpp:7, main(): vse norm
-

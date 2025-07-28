@@ -54,17 +54,17 @@ override CFLAGS += $(COMMONINC)
 
 ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-CSRC = src/logger.cpp utils/error_handling.cpp main.cpp
+CSRC = src/logger.cpp utils/error_handling.cpp
 
 COBJ := $(addprefix $(OUT_O_DIR)/, $(CSRC:.cpp=.o))
 DEPS = $(COBJ:.o=.d)
 
 .PHONY: all
-all: $(OUT_O_DIR)/logger.x
+all: $(OUT_O_DIR)/liblogger.a
 
-$(OUT_O_DIR)/logger.x: $(COBJ)
+$(OUT_O_DIR)/liblogger.a: $(COBJ)
 	@echo "$(GREEN)[LD ]$(RESET) $@"
-	@$(CC) $^ -o $@ $(LDFLAGS)
+	@ar rcs $@ $^
 
 $(COBJ) : $(OUT_O_DIR)/%.o : %.cpp
 	@mkdir -p $(@D)
@@ -78,7 +78,12 @@ $(DEPS) : $(OUT_O_DIR)/%.d : %.cpp
 
 .PHONY: clean
 clean:
-	rm -rf $(COBJ) $(DEPS) $(OUT_O_DIR)/*.x $(OUT_O_DIR)/*.log
+	rm -rf $(COBJ) $(DEPS) \
+	$(OUT_O_DIR)/*.x \
+	$(OUT_O_DIR)/*.a \
+	$(OUT_O_DIR)/*.log \
+	$(OUT_O_DIR)/*.d \
+	$(OUT_O_DIR)/*.o
 
 NODEPS = clean
 

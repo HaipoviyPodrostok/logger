@@ -10,6 +10,7 @@
 static FILE* log_file = NULL;
 
 static void current_time(char* cur_time_str);
+static logger_err_t log_message(const char* log_type, const char* file_from, int line_from, const char* func_from, const char* fmt, ...);
 
 logger_err_t log_open(const char* log_file_name) {
     assert(log_file_name);
@@ -27,7 +28,7 @@ logger_err_t log_close(void) {
     return LOGGER_ERR_SUCCES;
 }
 
-logger_err_t log_message(const char* log_lvl,   const char* file_from, int line_from,
+static logger_err_t log_message(const char* log_lvl,   const char* file_from, int line_from,
                          const char* func_from, const char* fmt, ...) {
 
     if (!log_file) return LOGGER_ERR_FILE_PRINT_FAILED;
