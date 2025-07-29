@@ -36,13 +36,13 @@ logger_err_t log_message(const char* log_lvl,   const char* file_from, int line_
     current_time(cur_time);
 
     va_list args;
-    va_start(args, fmt);
-    
+    va_start(args, fmt); 
     fprintf (log_file, "[%s] [%s] %s:%d, %s(): ", cur_time, log_lvl, file_from, line_from, func_from);
     vfprintf(log_file, fmt, args);
     fprintf (log_file, "\n");
-    
     va_end(args);
+
+    fflush(log_file);
 
     return LOGGER_ERR_SUCCES;
 }
