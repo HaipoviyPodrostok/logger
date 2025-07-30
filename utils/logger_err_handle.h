@@ -6,7 +6,7 @@
 #define LOGGER_ERROR(call_func, ...) ({                                             \
     logger_err_t error = call_func;                                                 \
     if (error) {                                                                    \
-        fprintf(stderr, "[" #call_func "] Error: %s\n", tree_error_str(error));     \
+        fprintf(stderr, "[" #call_func "] Error: %s\n", logger_error_str(error));     \
         __VA_ARGS__;                                                                \
         return error;                                                               \
     }                                                                               \
@@ -31,6 +31,6 @@ typedef enum {
     LOGGER_ERR_INCORRECT_STATUS = 15,
 } logger_err_t;
 
-const char* tree_error_str(logger_err_t error);
+const char* logger_error_str(logger_err_t error);
 
 #endif //LOGGER_ERR_HANDLE_H

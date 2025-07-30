@@ -5,7 +5,7 @@
 
 #define CASE_ENUM_TO_STRING(error) case error: return #error
 
-const char* tree_error_str(logger_err_t error) {
+const char* logger_error_str(logger_err_t error) {
     switch(error) {
         CASE_ENUM_TO_STRING(LOGGER_ERR_SUCCES);
         CASE_ENUM_TO_STRING(LOGGER_ERR_DUMP_FAILED);            
