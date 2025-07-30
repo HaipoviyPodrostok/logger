@@ -20,11 +20,11 @@ logger_err_t log_open(const char* log_file_name) {
     return LOGGER_ERR_SUCCES;
 }
 
-logger_err_t log_close(void) {
+void log_close(void) {
     fclose(log_file);
     log_file = NULL;
 
-    return LOGGER_ERR_SUCCES;
+    return;
 }
 
 logger_err_t log_message(const char* log_lvl,   const char* file_from, int line_from,
