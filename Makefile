@@ -12,7 +12,10 @@ ifeq ($(origin CC), default)
 	CC = g++
 endif
 
+# BUILD: debug or release
 BUILD ?= debug
+#MODE: exec or static
+MODE ?= exec
 
 COMMON_FLAGS ?= -std=c++17 -Wall -Wextra
 
@@ -37,14 +40,17 @@ DEBUG_FLAGS ?= -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall \
 
 RELEASE_FLAGS ?= -DNDEBUG -O2 -march=native -flto
 
+MAKEFLAGS += --no-print-directory
+
 ifeq ($(BUILD),debug)
 	CFLAGS = $(COMMON_FLAGS) $(DEBUG_FLAGS)
 	LDFLAGS = $(SANITAZER_FLAGS)
-else
+else ifeq ($(BUILD), release)
 	CFLAGS = $(COMMON_FLAGS) $(RELEASE_FLAGS)
 	LDFLAGS = 
+else
+	$(error Unknown BUILD mode: $(BUILD))
 endif
-
 
 OUT_O_DIR ?= build
 SRC = ./src
@@ -55,18 +61,30 @@ override CFLAGS += $(COMMONINC)
 
 ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-CSRC = src/logger.cpp utils/logger_err_handle.cpp
+CSRC = src/logger.cpp utils/logger_err_handle.cpp main.cpp
 
 COBJ := $(addprefix $(OUT_O_DIR)/, $(CSRC:.cpp=.o))
 DEPS = $(COBJ:.o=.d)
 
 
 .PHONY: all
-all: $(OUT_O_DIR)/liblogger.a
+all:
+ifeq ($(MODE), static)
+	@$(MAKE) $(OUT_O_DIR)/liblogger.a
+else ifeq ($(MODE), exec)
+	@$(MAKE) $(OUT_O_DIR)/logger.x
+else
+	@echo "$(YELLOW)[WARN] Unknown MODE: $(MODE) — use 'static' or 'exec'$(RESET)"
+	@exit 1
+endif
 
 $(OUT_O_DIR)/liblogger.a: $(COBJ)
 	@echo "$(GREEN)[LD ]$(RESET) $@"
 	@ar rcs $@ $^
+
+$(OUT_O_DIR)/logger.x: $(COBJ)
+	@echo "$(GREEN)[LD ]$(RESET) $@"
+	@$(CC) $^ -o $@ $(LDFLAGS)
 
 $(COBJ) : $(OUT_O_DIR)/%.o : %.cpp
 	@mkdir -p $(@D)
@@ -78,6 +96,11 @@ $(DEPS) : $(OUT_O_DIR)/%.d : %.cpp
 	@echo "$(GREEN)[DEP]$(RESET) $<"
 	@$(CC) -E $(CFLAGS) $< -MM -MT $(@:.d=.o) > $@
 
+.PHONY: rebuild
+rebuild: 
+	@$(MAKE) clean
+	@$(MAKE) all
+
 .PHONY: clean
 clean:
 	rm -rf $(COBJ) $(DEPS) \
@@ -87,7 +110,11 @@ clean:
 	$(OUT_O_DIR)/*.d \
 	$(OUT_O_DIR)/*.o
 
-NODEPS = clean
+.PHONY: clean_log
+clean_log:
+	rm -rf $(LOG_DIR)/*
+
+NODEPS = clean clean_log rebuild
 
 ifeq (0, $(words $(findstring $(MAKECMDGOALS), $(NODEPS))))
 include $(DEPS)

@@ -7,7 +7,7 @@
 
 const char* logger_error_str(logger_err_t error) {
     switch(error) {
-        CASE_ENUM_TO_STRING(LOGGER_ERR_SUCCES);
+        CASE_ENUM_TO_STRING(LOGGER_ERR_SUCCESS);
         CASE_ENUM_TO_STRING(LOGGER_ERR_DUMP_FAILED);            
         CASE_ENUM_TO_STRING(LOGGER_ERR_ALLOCATION_FAILED);
         CASE_ENUM_TO_STRING(LOGGER_ERR_FILE_READING_FAILED);
