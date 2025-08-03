@@ -4,7 +4,8 @@
 
 int main() {
     log_open("debug.log");
-    LOG(DEBUG, true, "fmbkdgb");
+    LOG(DEBUG, LOG_INFO, "fmbkdgb");
+    LOG(DEBUG, NO_LOG_INFO, "jvjfvfnv");
     log_close();
     return 0;
 }
