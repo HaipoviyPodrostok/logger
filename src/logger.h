@@ -8,7 +8,7 @@
 #define LOG_INFO    true
 #define NO_LOG_INFO false
 
-#define LOG(log_lvl, isTime, ...) LOGGER_ERROR (log_message(#log_lvl, isTime, __FILE__, __LINE__, __func__, __VA_ARGS__))
+#define LOG(log_lvl, isTime, ...) log_message(#log_lvl, isTime, __FILE__, __LINE__, __func__, __VA_ARGS__)
 
 logger_err_t log_open(const char* file_name);
 void log_close(void);
