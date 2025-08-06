@@ -36,7 +36,6 @@ DEBUG_FLAGS ?= -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall \
 			-Wno-old-style-cast -Wno-varargs -Wstack-protector -fcheck-new -fsized-deallocation \
 			-fstack-protector -fstrict-overflow -flto-odr-type-merging -fno-omit-frame-pointer \
 			-Wlarger-than=81920 -Wstack-usage=81920 -pie -fPIE -Werror=vla \
-			$(SANITAZER_FLAGS)
 
 RELEASE_FLAGS ?= -DNDEBUG -O2 -march=native -flto
 
@@ -54,6 +53,7 @@ endif
 
 OUT_O_DIR ?= build
 SRC = ./src
+LOG_DIR ?= log
 
 INCLUDE_DIRS := $(shell find src utils -type d)
 COMMONINC := $(addprefix -I,$(INCLUDE_DIRS))
