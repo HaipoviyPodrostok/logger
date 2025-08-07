@@ -31,7 +31,7 @@ void log_close(void) {
     return;
 }
 
-logger_err_t log_message(const char* log_lvl, bool isTime, const char* file_from, 
+logger_err_t log_message(const char* log_lvl, bool isLogInfo, const char* file_from, 
                          int line_from, const char* func_from, const char* fmt, ...) {
 
     if (!log_file) return LOGGER_ERR_NULL_PTR_ERROR;
@@ -42,7 +42,7 @@ logger_err_t log_message(const char* log_lvl, bool isTime, const char* file_from
     va_list args;
     va_start(args, fmt); 
     
-    if (isTime == true) {
+    if (isLogInfo == true) {
         fprintf (log_file, "[%s] [%s] %s:%d, %s(): ", cur_time, log_lvl, file_from, line_from, func_from);
     }
     

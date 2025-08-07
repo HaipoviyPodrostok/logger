@@ -12,7 +12,7 @@
 
 logger_err_t log_open(const char* file_name);
 void log_close(void);
-logger_err_t log_message(const char* log_lvl, bool isTime, const char* file_from, 
+logger_err_t log_message(const char* log_lvl, bool isLogInfo, const char* file_from, 
                          int line_from, const char* func_from, const char* fmt, ...);
 const char* current_time(void);
 
